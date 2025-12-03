@@ -36,7 +36,8 @@ const App = () => {
 		saveTemplate,
 	} = useTemplate(templateId);
 
-	const { canUndo, canRedo, undo, redo, pushState } = useHistory(template);
+	// History now automatically tracks template changes
+	const { canUndo, canRedo, undo, redo } = useHistory(template, setTemplate);
 
 	// Load template
 	useEffect(() => {
@@ -96,34 +97,29 @@ const App = () => {
 		});
 		if (duplicatedElements.length > 0) {
 			setSelectedElements(duplicatedElements);
-			pushState(template);
 		}
-	}, [selectedElements, duplicateElement, pushState, template]);
+	}, [selectedElements, duplicateElement]);
 
-	// Handle layer operations (works on first selected element when multiple)
+	// Handle layer operations
 	const handleBringForward = useCallback(() => {
 		if (selectedElements.length === 0) return;
 		selectedElements.forEach((el) => moveElementLayer(el.id, 'forward'));
-		pushState(template);
-	}, [selectedElements, moveElementLayer, pushState, template]);
+	}, [selectedElements, moveElementLayer]);
 
 	const handleSendBackward = useCallback(() => {
 		if (selectedElements.length === 0) return;
 		selectedElements.forEach((el) => moveElementLayer(el.id, 'backward'));
-		pushState(template);
-	}, [selectedElements, moveElementLayer, pushState, template]);
+	}, [selectedElements, moveElementLayer]);
 
 	const handleBringToFront = useCallback(() => {
 		if (selectedElements.length === 0) return;
 		selectedElements.forEach((el) => bringToFront(el.id));
-		pushState(template);
-	}, [selectedElements, bringToFront, pushState, template]);
+	}, [selectedElements, bringToFront]);
 
 	const handleSendToBack = useCallback(() => {
 		if (selectedElements.length === 0) return;
 		selectedElements.forEach((el) => sendToBack(el.id));
-		pushState(template);
-	}, [selectedElements, sendToBack, pushState, template]);
+	}, [selectedElements, sendToBack]);
 
 	// Handle keyboard shortcuts
 	useEffect(() => {
@@ -220,9 +216,8 @@ const App = () => {
 			setSelectedElements((prev) =>
 				prev.map((el) => (el.id === elementId ? { ...el, ...updates } : el))
 			);
-			pushState(template);
 		},
-		[updateElement, pushState, template]
+		[updateElement]
 	);
 
 	// Handle add element
@@ -230,10 +225,9 @@ const App = () => {
 		(type, options = {}) => {
 			const newElement = addElement(type, options);
 			setSelectedElements([newElement]);
-			pushState(template);
 			return newElement;
 		},
-		[addElement, pushState, template]
+		[addElement]
 	);
 
 	if (loading) {

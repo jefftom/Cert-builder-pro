@@ -1,0 +1,152 @@
+{
+  "name": "Creative Arts",
+  "category": "creative",
+  "size": { "width": 792, "height": 612 },
+  "orientation": "landscape",
+  "background": { "type": "color", "value": "#fef3e2" },
+  "elements": [
+    {
+      "id": "el_accent_circle_1",
+      "type": "shape",
+      "shapeType": "circle",
+      "x": 50,
+      "y": 50,
+      "width": 100,
+      "height": 100,
+      "fill": "#f97316",
+      "stroke": "",
+      "strokeWidth": 0
+    },
+    {
+      "id": "el_accent_circle_2",
+      "type": "shape",
+      "shapeType": "circle",
+      "x": 692,
+      "y": 462,
+      "width": 80,
+      "height": 80,
+      "fill": "#ec4899",
+      "stroke": "",
+      "strokeWidth": 0
+    },
+    {
+      "id": "el_accent_circle_3",
+      "type": "shape",
+      "shapeType": "circle",
+      "x": 680,
+      "y": 30,
+      "width": 60,
+      "height": 60,
+      "fill": "#8b5cf6",
+      "stroke": "",
+      "strokeWidth": 0
+    },
+    {
+      "id": "el_title",
+      "type": "text",
+      "content": "Certificate of Creativity",
+      "x": 396,
+      "y": 100,
+      "fontSize": 42,
+      "fontFamily": "dancing-script",
+      "fontWeight": "bold",
+      "fill": "#7c2d12",
+      "align": "center",
+      "width": 600
+    },
+    {
+      "id": "el_line_1",
+      "type": "line",
+      "x": 200,
+      "y": 155,
+      "width": 392,
+      "stroke": "#f97316",
+      "strokeWidth": 2
+    },
+    {
+      "id": "el_presented",
+      "type": "text",
+      "content": "Awarded with pride to",
+      "x": 396,
+      "y": 175,
+      "fontSize": 16,
+      "fontFamily": "lora",
+      "fontWeight": "normal",
+      "fill": "#92400e",
+      "align": "center",
+      "width": 300
+    },
+    {
+      "id": "el_student_name",
+      "type": "dynamic_field",
+      "field": "student_name",
+      "x": 396,
+      "y": 210,
+      "fontSize": 52,
+      "fontFamily": "alex-brush",
+      "fontWeight": "normal",
+      "fill": "#c2410c",
+      "align": "center",
+      "width": 600
+    },
+    {
+      "id": "el_for",
+      "type": "text",
+      "content": "for exceptional work and creative excellence in",
+      "x": 396,
+      "y": 290,
+      "fontSize": 14,
+      "fontFamily": "lora",
+      "fontWeight": "normal",
+      "fill": "#92400e",
+      "align": "center",
+      "width": 450
+    },
+    {
+      "id": "el_course_title",
+      "type": "dynamic_field",
+      "field": "course_title",
+      "x": 396,
+      "y": 320,
+      "fontSize": 26,
+      "fontFamily": "dancing-script",
+      "fontWeight": "bold",
+      "fill": "#9333ea",
+      "align": "center",
+      "width": 550
+    },
+    {
+      "id": "el_date",
+      "type": "dynamic_field",
+      "field": "completion_date",
+      "x": 396,
+      "y": 420,
+      "fontSize": 16,
+      "fontFamily": "lora",
+      "fontWeight": "normal",
+      "fill": "#78350f",
+      "align": "center",
+      "width": 200
+    },
+    {
+      "id": "el_qr_code",
+      "type": "qr_code",
+      "x": 100,
+      "y": 480,
+      "size": 70
+    },
+    {
+      "id": "el_cert_id",
+      "type": "dynamic_field",
+      "field": "certificate_id",
+      "x": 396,
+      "y": 520,
+      "fontSize": 11,
+      "fontFamily": "lora",
+      "fontWeight": "normal",
+      "fill": "#a16207",
+      "align": "center",
+      "width": 200
+    }
+  ]
+}
