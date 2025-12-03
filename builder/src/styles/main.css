@@ -358,6 +358,95 @@
 	text-align: center;
 }
 
+.cb-control-group {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.cb-control-divider {
+	width: 1px;
+	height: 20px;
+	background: var(--cb-border);
+	margin: 0 4px;
+}
+
+.cb-toggle-btn,
+.cb-align-btn,
+.cb-action-btn,
+.cb-layer-btn {
+	padding: 4px 6px;
+	border: 1px solid var(--cb-border);
+	background: var(--cb-sidebar-bg);
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 14px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 28px;
+	height: 28px;
+	color: var(--cb-text-light);
+	transition: all 0.15s ease;
+}
+
+.cb-toggle-btn:hover,
+.cb-align-btn:hover:not(:disabled),
+.cb-action-btn:hover:not(:disabled),
+.cb-layer-btn:hover:not(:disabled) {
+	background: var(--cb-bg);
+	color: var(--cb-text);
+	border-color: var(--cb-primary);
+}
+
+.cb-toggle-btn.active {
+	background: #eff6ff;
+	color: var(--cb-primary);
+	border-color: var(--cb-primary);
+}
+
+.cb-align-btn:disabled,
+.cb-action-btn:disabled,
+.cb-layer-btn:disabled {
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+
+.cb-action-btn svg,
+.cb-layer-btn svg,
+.cb-align-btn svg,
+.cb-toggle-btn svg {
+	width: 14px;
+	height: 14px;
+}
+
+/* Multi-select info */
+.cb-multi-select-info {
+	padding: 12px;
+	background: var(--cb-bg);
+	border-radius: 6px;
+	margin-bottom: 16px;
+	text-align: center;
+}
+
+.cb-multi-select-info p {
+	margin: 0;
+	font-size: 14px;
+	font-weight: 600;
+	color: var(--cb-text);
+}
+
+.cb-multi-select-info .cb-property-description {
+	margin-top: 8px;
+	font-weight: normal;
+}
+
+/* Canvas with rulers */
+.cb-canvas-with-rulers {
+	position: relative;
+	display: inline-block;
+}
+
 .cb-canvas-scroll canvas {
 	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }

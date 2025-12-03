@@ -16,8 +16,11 @@ const App = () => {
 	const templateId = window.certbuilderBuilder?.templateId || 0;
 	const [loading, setLoading] = useState(true);
 	const [saving, setSaving] = useState(false);
-	const [selectedElement, setSelectedElement] = useState(null);
+	const [selectedElements, setSelectedElements] = useState([]);
 	const [canvas, setCanvas] = useState(null);
+
+	// For convenience, get the first/only selected element
+	const selectedElement = selectedElements.length === 1 ? selectedElements[0] : null;
 
 	const {
 		template,
@@ -26,6 +29,10 @@ const App = () => {
 		addElement,
 		updateElement,
 		removeElement,
+		duplicateElement,
+		moveElementLayer,
+		bringToFront,
+		sendToBack,
 		saveTemplate,
 	} = useTemplate(templateId);
 
@@ -79,9 +86,51 @@ const App = () => {
 		setSaving(false);
 	}, [saveTemplate, templateId]);
 
+	// Handle duplicate element(s)
+	const handleDuplicateElement = useCallback(() => {
+		if (selectedElements.length === 0) return;
+		const duplicatedElements = [];
+		selectedElements.forEach((el) => {
+			const duplicated = duplicateElement(el.id);
+			if (duplicated) duplicatedElements.push(duplicated);
+		});
+		if (duplicatedElements.length > 0) {
+			setSelectedElements(duplicatedElements);
+			pushState(template);
+		}
+	}, [selectedElements, duplicateElement, pushState, template]);
+
+	// Handle layer operations (works on first selected element when multiple)
+	const handleBringForward = useCallback(() => {
+		if (selectedElements.length === 0) return;
+		selectedElements.forEach((el) => moveElementLayer(el.id, 'forward'));
+		pushState(template);
+	}, [selectedElements, moveElementLayer, pushState, template]);
+
+	const handleSendBackward = useCallback(() => {
+		if (selectedElements.length === 0) return;
+		selectedElements.forEach((el) => moveElementLayer(el.id, 'backward'));
+		pushState(template);
+	}, [selectedElements, moveElementLayer, pushState, template]);
+
+	const handleBringToFront = useCallback(() => {
+		if (selectedElements.length === 0) return;
+		selectedElements.forEach((el) => bringToFront(el.id));
+		pushState(template);
+	}, [selectedElements, bringToFront, pushState, template]);
+
+	const handleSendToBack = useCallback(() => {
+		if (selectedElements.length === 0) return;
+		selectedElements.forEach((el) => sendToBack(el.id));
+		pushState(template);
+	}, [selectedElements, sendToBack, pushState, template]);
+
 	// Handle keyboard shortcuts
 	useEffect(() => {
 		const handleKeyDown = (e) => {
+			// Ignore when typing in input fields
+			if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
 			// Ctrl/Cmd + S = Save
 			if ((e.ctrlKey || e.metaKey) && e.key === 's') {
 				e.preventDefault();
@@ -97,40 +146,90 @@ const App = () => {
 				e.preventDefault();
 				redo();
 			}
-			// Delete = Remove element
-			if ((e.key === 'Delete' || e.key === 'Backspace') && selectedElement) {
+			// Ctrl/Cmd + D = Duplicate element(s)
+			if ((e.ctrlKey || e.metaKey) && e.key === 'd' && selectedElements.length > 0) {
 				e.preventDefault();
-				removeElement(selectedElement.id);
-				setSelectedElement(null);
+				handleDuplicateElement();
+			}
+			// Ctrl/Cmd + ] = Bring forward
+			if ((e.ctrlKey || e.metaKey) && e.key === ']' && selectedElements.length > 0) {
+				e.preventDefault();
+				if (e.shiftKey) {
+					handleBringToFront();
+				} else {
+					handleBringForward();
+				}
+			}
+			// Ctrl/Cmd + [ = Send backward
+			if ((e.ctrlKey || e.metaKey) && e.key === '[' && selectedElements.length > 0) {
+				e.preventDefault();
+				if (e.shiftKey) {
+					handleSendToBack();
+				} else {
+					handleSendBackward();
+				}
+			}
+			// Ctrl/Cmd + A = Select all
+			if ((e.ctrlKey || e.metaKey) && e.key === 'a') {
+				e.preventDefault();
+				if (template?.data?.elements) {
+					setSelectedElements([...template.data.elements]);
+				}
+			}
+			// Escape = Deselect all
+			if (e.key === 'Escape') {
+				setSelectedElements([]);
+			}
+			// Delete = Remove selected element(s)
+			if ((e.key === 'Delete' || e.key === 'Backspace') && selectedElements.length > 0) {
+				e.preventDefault();
+				selectedElements.forEach((el) => removeElement(el.id));
+				setSelectedElements([]);
 			}
 		};
 
 		window.addEventListener('keydown', handleKeyDown);
 		return () => window.removeEventListener('keydown', handleKeyDown);
-	}, [handleSave, undo, redo, selectedElement, removeElement]);
+	}, [handleSave, undo, redo, selectedElements, removeElement, handleDuplicateElement, handleBringForward, handleSendBackward, handleBringToFront, handleSendToBack, template]);
 
-	// Handle element selection
-	const handleElementSelect = useCallback((element) => {
-		setSelectedElement(element);
+	// Handle element selection (supports multi-select via array)
+	const handleElementSelect = useCallback((elements, addToSelection = false) => {
+		if (!elements) {
+			setSelectedElements([]);
+			return;
+		}
+
+		const elementsArray = Array.isArray(elements) ? elements : [elements];
+
+		if (addToSelection) {
+			setSelectedElements((prev) => {
+				const newIds = elementsArray.map((el) => el.id);
+				const existing = prev.filter((el) => !newIds.includes(el.id));
+				return [...existing, ...elementsArray];
+			});
+		} else {
+			setSelectedElements(elementsArray);
+		}
 	}, []);
 
 	// Handle element update
 	const handleElementUpdate = useCallback(
 		(elementId, updates) => {
 			updateElement(elementId, updates);
-			if (selectedElement && selectedElement.id === elementId) {
-				setSelectedElement({ ...selectedElement, ...updates });
-			}
+			// Update selected elements if the updated element is in selection
+			setSelectedElements((prev) =>
+				prev.map((el) => (el.id === elementId ? { ...el, ...updates } : el))
+			);
 			pushState(template);
 		},
-		[updateElement, selectedElement, pushState, template]
+		[updateElement, pushState, template]
 	);
 
 	// Handle add element
 	const handleAddElement = useCallback(
 		(type, options = {}) => {
 			const newElement = addElement(type, options);
-			setSelectedElement(newElement);
+			setSelectedElements([newElement]);
 			pushState(template);
 			return newElement;
 		},
@@ -169,25 +268,29 @@ const App = () => {
 				<div className="cb-builder-canvas-container">
 					<EditorCanvas
 						template={template}
-						selectedElement={selectedElement}
+						selectedElements={selectedElements}
 						onElementSelect={handleElementSelect}
 						onElementUpdate={handleElementUpdate}
+						onElementDuplicate={handleDuplicateElement}
+						onBringForward={handleBringForward}
+						onSendBackward={handleSendBackward}
+						onBringToFront={handleBringToFront}
+						onSendToBack={handleSendToBack}
 						onCanvasReady={setCanvas}
 					/>
 				</div>
 
 				<PropertiesPanel
-					element={selectedElement}
+					elements={selectedElements}
 					onUpdate={(updates) => {
-						if (selectedElement) {
-							handleElementUpdate(selectedElement.id, updates);
-						}
+						// Apply updates to all selected elements
+						selectedElements.forEach((el) => {
+							handleElementUpdate(el.id, updates);
+						});
 					}}
 					onDelete={() => {
-						if (selectedElement) {
-							removeElement(selectedElement.id);
-							setSelectedElement(null);
-						}
+						selectedElements.forEach((el) => removeElement(el.id));
+						setSelectedElements([]);
 					}}
 				/>
 			</div>

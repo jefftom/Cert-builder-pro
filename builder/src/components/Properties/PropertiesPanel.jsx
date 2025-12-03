@@ -11,14 +11,55 @@ import {
 	Button,
 } from '@wordpress/components';
 
-const PropertiesPanel = ({ element, onUpdate, onDelete }) => {
-	if (!element) {
+const PropertiesPanel = ({ elements = [], onUpdate, onDelete }) => {
+	// Handle empty selection
+	if (!elements || elements.length === 0) {
 		return (
 			<div className="cb-properties-panel cb-properties-empty">
 				<p>{__('Select an element to edit its properties', 'certbuilder-pro')}</p>
 			</div>
 		);
 	}
+
+	// Handle multiple selection
+	if (elements.length > 1) {
+		return (
+			<div className="cb-properties-panel">
+				<div className="cb-properties-header">
+					<h3>{__('Multiple Elements', 'certbuilder-pro')}</h3>
+					<Button
+						variant="link"
+						onClick={onDelete}
+						className="cb-delete-btn"
+						isDestructive
+					>
+						{__('Delete All', 'certbuilder-pro')}
+					</Button>
+				</div>
+				<div className="cb-properties-content">
+					<div className="cb-multi-select-info">
+						<p>{elements.length} {__('elements selected', 'certbuilder-pro')}</p>
+						<p className="cb-property-description">
+							{__('Changes will apply to all selected elements.', 'certbuilder-pro')}
+						</p>
+					</div>
+					<div className="cb-property-group">
+						<h4>{__('Common Properties', 'certbuilder-pro')}</h4>
+						<RangeControl
+							label={__('Rotation', 'certbuilder-pro')}
+							value={0}
+							onChange={(value) => onUpdate({ rotation: value })}
+							min={-180}
+							max={180}
+						/>
+					</div>
+				</div>
+			</div>
+		);
+	}
+
+	// Single element selected
+	const element = elements[0];
 
 	const fonts = window.certbuilderBuilder?.fonts || [];
 	const fontOptions = fonts.map((font) => ({

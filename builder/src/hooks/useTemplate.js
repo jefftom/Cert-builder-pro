@@ -71,6 +71,124 @@ export const useTemplate = (templateId) => {
 		});
 	}, []);
 
+	// Duplicate element
+	const duplicateElement = useCallback((elementId) => {
+		let duplicatedElement = null;
+
+		setTemplate((prev) => {
+			if (!prev) return prev;
+
+			const elementToDuplicate = prev.data.elements.find((el) => el.id === elementId);
+			if (!elementToDuplicate) return prev;
+
+			// Create a copy with a new ID and offset position
+			duplicatedElement = {
+				...elementToDuplicate,
+				id: generateId(),
+				x: (elementToDuplicate.x || 0) + 20,
+				y: (elementToDuplicate.y || 0) + 20,
+				layerOrder: Date.now(),
+			};
+
+			return {
+				...prev,
+				data: {
+					...prev.data,
+					elements: [...prev.data.elements, duplicatedElement],
+				},
+			};
+		});
+
+		return duplicatedElement;
+	}, []);
+
+	// Move element layer (bring forward/back)
+	const moveElementLayer = useCallback((elementId, direction) => {
+		setTemplate((prev) => {
+			if (!prev) return prev;
+
+			const elements = [...prev.data.elements];
+			const index = elements.findIndex((el) => el.id === elementId);
+			if (index === -1) return prev;
+
+			const newIndex = direction === 'forward'
+				? Math.min(index + 1, elements.length - 1)
+				: Math.max(index - 1, 0);
+
+			if (newIndex === index) return prev;
+
+			// Swap elements
+			const temp = elements[index];
+			elements[index] = elements[newIndex];
+			elements[newIndex] = temp;
+
+			// Update layer orders
+			elements.forEach((el, i) => {
+				el.layerOrder = i;
+			});
+
+			return {
+				...prev,
+				data: {
+					...prev.data,
+					elements,
+				},
+			};
+		});
+	}, []);
+
+	// Bring element to front
+	const bringToFront = useCallback((elementId) => {
+		setTemplate((prev) => {
+			if (!prev) return prev;
+
+			const elements = [...prev.data.elements];
+			const index = elements.findIndex((el) => el.id === elementId);
+			if (index === -1 || index === elements.length - 1) return prev;
+
+			const [element] = elements.splice(index, 1);
+			elements.push(element);
+
+			elements.forEach((el, i) => {
+				el.layerOrder = i;
+			});
+
+			return {
+				...prev,
+				data: {
+					...prev.data,
+					elements,
+				},
+			};
+		});
+	}, []);
+
+	// Send element to back
+	const sendToBack = useCallback((elementId) => {
+		setTemplate((prev) => {
+			if (!prev) return prev;
+
+			const elements = [...prev.data.elements];
+			const index = elements.findIndex((el) => el.id === elementId);
+			if (index === -1 || index === 0) return prev;
+
+			const [element] = elements.splice(index, 1);
+			elements.unshift(element);
+
+			elements.forEach((el, i) => {
+				el.layerOrder = i;
+			});
+
+			return {
+				...prev,
+				data: {
+					...prev.data,
+					elements,
+				},
+			};
+		});
+	}, []);
+
 	// Save template
 	const saveTemplate = useCallback(async () => {
 		if (!template) return null;
@@ -103,6 +221,10 @@ export const useTemplate = (templateId) => {
 		addElement,
 		updateElement,
 		removeElement,
+		duplicateElement,
+		moveElementLayer,
+		bringToFront,
+		sendToBack,
 		saveTemplate,
 	};
 };
