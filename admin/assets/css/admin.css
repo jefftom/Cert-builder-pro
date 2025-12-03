@@ -1,0 +1,334 @@
+/**
+ * CertBuilder Pro Admin Styles
+ */
+
+:root {
+	--cb-primary: #3b82f6;
+	--cb-primary-dark: #2563eb;
+	--cb-success: #22c55e;
+	--cb-warning: #f59e0b;
+	--cb-error: #ef4444;
+	--cb-text: #1f2937;
+	--cb-text-light: #6b7280;
+	--cb-border: #e5e7eb;
+	--cb-bg: #f9fafb;
+	--cb-white: #ffffff;
+}
+
+/* Dashboard */
+.certbuilder-dashboard {
+	margin-top: 20px;
+}
+
+.certbuilder-stats-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: 20px;
+	margin-bottom: 30px;
+}
+
+.certbuilder-stat-card {
+	background: var(--cb-white);
+	border: 1px solid var(--cb-border);
+	border-radius: 8px;
+	padding: 20px;
+	display: flex;
+	align-items: center;
+	gap: 15px;
+}
+
+.stat-icon {
+	width: 50px;
+	height: 50px;
+	background: var(--cb-bg);
+	border-radius: 8px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.stat-icon .dashicons {
+	font-size: 24px;
+	width: 24px;
+	height: 24px;
+	color: var(--cb-primary);
+}
+
+.stat-icon.stat-success .dashicons {
+	color: var(--cb-success);
+}
+
+.stat-icon.stat-warning .dashicons {
+	color: var(--cb-warning);
+}
+
+.stat-icon.stat-info .dashicons {
+	color: var(--cb-primary);
+}
+
+.stat-number {
+	font-size: 28px;
+	font-weight: 600;
+	color: var(--cb-text);
+	line-height: 1;
+}
+
+.stat-label {
+	font-size: 13px;
+	color: var(--cb-text-light);
+	margin-top: 4px;
+}
+
+.certbuilder-dashboard-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+	gap: 20px;
+}
+
+/* Cards */
+.certbuilder-card {
+	background: var(--cb-white);
+	border: 1px solid var(--cb-border);
+	border-radius: 8px;
+	padding: 20px;
+}
+
+.certbuilder-card h2 {
+	margin: 0 0 15px;
+	padding: 0 0 15px;
+	border-bottom: 1px solid var(--cb-border);
+	font-size: 16px;
+	font-weight: 600;
+}
+
+/* Quick Actions */
+.certbuilder-quick-actions {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.certbuilder-quick-actions .button-hero {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+}
+
+/* LMS Status */
+.certbuilder-lms-status {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.certbuilder-lms-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
+	background: var(--cb-bg);
+	border-radius: 4px;
+}
+
+.lms-status {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	font-size: 12px;
+	font-weight: 500;
+}
+
+.lms-status .dashicons {
+	font-size: 16px;
+	width: 16px;
+	height: 16px;
+}
+
+.lms-active {
+	color: var(--cb-success);
+}
+
+.lms-inactive {
+	color: var(--cb-text-light);
+}
+
+/* Empty States */
+.certbuilder-empty-state {
+	text-align: center;
+	padding: 20px;
+	color: var(--cb-text-light);
+}
+
+.certbuilder-empty-state a {
+	display: block;
+	margin-top: 10px;
+}
+
+.certbuilder-empty-state-large {
+	text-align: center;
+	padding: 60px 20px;
+	background: var(--cb-white);
+	border: 1px solid var(--cb-border);
+	border-radius: 8px;
+	margin-top: 20px;
+}
+
+.certbuilder-empty-state-large .dashicons {
+	font-size: 48px;
+	width: 48px;
+	height: 48px;
+	color: var(--cb-border);
+	margin-bottom: 15px;
+}
+
+.certbuilder-empty-state-large h2 {
+	margin: 0 0 10px;
+	color: var(--cb-text);
+}
+
+.certbuilder-empty-state-large p {
+	color: var(--cb-text-light);
+	margin: 0 0 20px;
+}
+
+/* Status Badges */
+.certbuilder-status {
+	display: inline-block;
+	padding: 3px 8px;
+	border-radius: 4px;
+	font-size: 12px;
+	font-weight: 500;
+}
+
+.certbuilder-status-active {
+	background: #dcfce7;
+	color: #166534;
+}
+
+.certbuilder-status-revoked {
+	background: #fee2e2;
+	color: #991b1b;
+}
+
+.certbuilder-status-expired {
+	background: #fef3c7;
+	color: #92400e;
+}
+
+/* Templates Grid */
+.certbuilder-templates-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	gap: 20px;
+	margin-top: 20px;
+}
+
+.certbuilder-template-card {
+	background: var(--cb-white);
+	border: 1px solid var(--cb-border);
+	border-radius: 8px;
+	overflow: hidden;
+	transition: box-shadow 0.2s;
+}
+
+.certbuilder-template-card:hover {
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.template-preview {
+	aspect-ratio: 4/3;
+	background: var(--cb-bg);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.template-preview img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.template-preview-placeholder {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.template-preview-placeholder .dashicons {
+	font-size: 48px;
+	width: 48px;
+	height: 48px;
+	color: var(--cb-border);
+}
+
+.template-info {
+	padding: 15px;
+}
+
+.template-info h3 {
+	margin: 0 0 5px;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.template-meta {
+	margin: 0;
+	font-size: 12px;
+	color: var(--cb-text-light);
+}
+
+.template-actions {
+	padding: 0 15px 15px;
+	display: flex;
+	gap: 8px;
+}
+
+/* Filters */
+.certbuilder-filters {
+	display: flex;
+	gap: 10px;
+	margin: 20px 0;
+	flex-wrap: wrap;
+}
+
+.certbuilder-filters select,
+.certbuilder-filters input[type="search"] {
+	min-width: 150px;
+}
+
+/* Tables */
+.certbuilder-admin .wp-list-table .column-certificate-id {
+	width: 150px;
+}
+
+.certbuilder-admin .wp-list-table .column-status {
+	width: 100px;
+}
+
+.certbuilder-admin .wp-list-table .column-actions {
+	width: 180px;
+}
+
+/* Revoke Button */
+.certbuilder-revoke-btn {
+	color: var(--cb-error) !important;
+	border-color: var(--cb-error) !important;
+}
+
+.certbuilder-revoke-btn:hover {
+	background: var(--cb-error) !important;
+	color: white !important;
+}
+
+/* Responsive */
+@media (max-width: 782px) {
+	.certbuilder-dashboard-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.certbuilder-stats-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}

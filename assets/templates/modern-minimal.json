@@ -1,0 +1,151 @@
+{
+  "name": "Modern Minimal",
+  "category": "modern",
+  "size": { "width": 792, "height": 612 },
+  "orientation": "landscape",
+  "background": { "type": "color", "value": "#ffffff" },
+  "elements": [
+    {
+      "id": "el_header_line",
+      "type": "line",
+      "x": 100,
+      "y": 80,
+      "width": 592,
+      "stroke": "#3b82f6",
+      "strokeWidth": 3
+    },
+    {
+      "id": "el_title",
+      "type": "text",
+      "content": "CERTIFICATE OF COMPLETION",
+      "x": 396,
+      "y": 100,
+      "fontSize": 28,
+      "fontFamily": "montserrat",
+      "fontWeight": "bold",
+      "fill": "#1f2937",
+      "align": "center",
+      "width": 500
+    },
+    {
+      "id": "el_subtitle",
+      "type": "text",
+      "content": "This is to certify that",
+      "x": 396,
+      "y": 180,
+      "fontSize": 14,
+      "fontFamily": "open-sans",
+      "fontWeight": "normal",
+      "fill": "#6b7280",
+      "align": "center",
+      "width": 400
+    },
+    {
+      "id": "el_student_name",
+      "type": "dynamic_field",
+      "field": "student_name",
+      "x": 396,
+      "y": 210,
+      "fontSize": 42,
+      "fontFamily": "great-vibes",
+      "fontWeight": "normal",
+      "fill": "#1f2937",
+      "align": "center",
+      "width": 500
+    },
+    {
+      "id": "el_has_completed",
+      "type": "text",
+      "content": "has successfully completed",
+      "x": 396,
+      "y": 280,
+      "fontSize": 14,
+      "fontFamily": "open-sans",
+      "fontWeight": "normal",
+      "fill": "#6b7280",
+      "align": "center",
+      "width": 400
+    },
+    {
+      "id": "el_course_title",
+      "type": "dynamic_field",
+      "field": "course_title",
+      "x": 396,
+      "y": 310,
+      "fontSize": 24,
+      "fontFamily": "montserrat",
+      "fontWeight": "bold",
+      "fill": "#3b82f6",
+      "align": "center",
+      "width": 500
+    },
+    {
+      "id": "el_date_label",
+      "type": "text",
+      "content": "Issued on",
+      "x": 200,
+      "y": 420,
+      "fontSize": 12,
+      "fontFamily": "open-sans",
+      "fontWeight": "normal",
+      "fill": "#6b7280",
+      "align": "center",
+      "width": 150
+    },
+    {
+      "id": "el_date",
+      "type": "dynamic_field",
+      "field": "completion_date",
+      "x": 200,
+      "y": 440,
+      "fontSize": 16,
+      "fontFamily": "montserrat",
+      "fontWeight": "bold",
+      "fill": "#1f2937",
+      "align": "center",
+      "width": 150
+    },
+    {
+      "id": "el_cert_id_label",
+      "type": "text",
+      "content": "Certificate ID",
+      "x": 592,
+      "y": 420,
+      "fontSize": 12,
+      "fontFamily": "open-sans",
+      "fontWeight": "normal",
+      "fill": "#6b7280",
+      "align": "center",
+      "width": 150
+    },
+    {
+      "id": "el_cert_id",
+      "type": "dynamic_field",
+      "field": "certificate_id",
+      "x": 592,
+      "y": 440,
+      "fontSize": 14,
+      "fontFamily": "montserrat",
+      "fontWeight": "normal",
+      "fill": "#1f2937",
+      "align": "center",
+      "width": 150
+    },
+    {
+      "id": "el_qr_code",
+      "type": "qr_code",
+      "x": 356,
+      "y": 490,
+      "size": 70
+    },
+    {
+      "id": "el_footer_line",
+      "type": "line",
+      "x": 100,
+      "y": 580,
+      "width": 592,
+      "stroke": "#3b82f6",
+      "strokeWidth": 3
+    }
+  ]
+}
