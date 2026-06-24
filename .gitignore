@@ -1,11 +1,18 @@
 # Dependencies
 /vendor/
-/node_modules/
+node_modules/
 
 # Build artifacts
 /builder/dist/
 /assets/js/*.min.js
 /assets/css/*.min.css
+
+# Bundled fonts (8.6MB, fetched via bin/download-fonts.sh; shipped in release zip)
+/assets/fonts/*.ttf
+
+# Release packages
+/dist/
+*.zip
 
 # Environment files
 .env
